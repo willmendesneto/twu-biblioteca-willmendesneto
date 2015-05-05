@@ -12,14 +12,20 @@ public class Menu {
             add(new Book("Learning TDD", "Cool Girl", 2015));
             add(new Book("Awesome book", "author with huge name", 2014));
             add(new Book("Another awesome book", "myself", 2013));
-        }});
+        }},
+        new ArrayList<Movie>() {{
+            add(new Movie("Jurassic Park", "Spielberg", 2008, 9));
+            add(new Movie("The Butterfly Effect", "Eric Bress", 2004, 7));
+            add(new Movie("Saw", "James Wan", 2005, 10));
+        }}
+        );
     }
 
-    public String readBookName(){
+    public String readItemInformation(String message){
         Scanner text = new Scanner(System.in);
-        System.out.println(MessagesHelper.SearchBookInLibrary);
-        String bookTitle = text.nextLine();
-        return bookTitle;
+        System.out.println(message);
+        String itemInformation = text.nextLine();
+        return itemInformation;
     }
 
     public void menuOptions(int option) {
@@ -29,16 +35,31 @@ public class Menu {
                 message += _biblioteca.getBookListDetails();
                 break;
             case 2:
-                boolean checkoutWithSuccess = _biblioteca.checkout(readBookName());
-                message += (checkoutWithSuccess == true) ?
-                        MessagesHelper.CheckoutSuccess :
-                        MessagesHelper.CheckoutError;
+                boolean checkoutBookWithSuccess = _biblioteca.checkoutBook(readItemInformation(MessagesHelper.SearchBookInLibrary));
+                message += (checkoutBookWithSuccess == true) ?
+                        MessagesHelper.CheckoutBookSuccess :
+                        MessagesHelper.CheckoutBookError;
                 break;
             case 3:
-                boolean bookWasReturnedWithSuccess = _biblioteca.returnBook(readBookName());
+                boolean bookWasReturnedWithSuccess = _biblioteca.returnBook(readItemInformation(MessagesHelper.SearchBookInLibrary));
                 message += (bookWasReturnedWithSuccess) ?
                         MessagesHelper.ReturnBookSuccess :
                         MessagesHelper.ReturnBookError;
+                break;
+            case 4:
+                message += _biblioteca.getMovieListDetails();
+                break;
+            case 5:
+                boolean checkoutMovieWithSuccess = _biblioteca.checkoutMovie(readItemInformation(MessagesHelper.SearchMovieInLibrary));
+                message += (checkoutMovieWithSuccess == true) ?
+                        MessagesHelper.CheckoutMovieSuccess :
+                        MessagesHelper.CheckoutMovieError;
+                break;
+            case 6:
+                boolean movieWasReturnedWithSuccess = _biblioteca.returnMovie(readItemInformation(MessagesHelper.SearchMovieInLibrary));
+                message += (movieWasReturnedWithSuccess) ?
+                        MessagesHelper.ReturnMovieSuccess :
+                        MessagesHelper.ReturnMovieError;
                 break;
             case 0:
                 message += MessagesHelper.Quit;

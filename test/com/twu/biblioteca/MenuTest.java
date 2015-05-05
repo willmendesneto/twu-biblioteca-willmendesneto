@@ -1,7 +1,7 @@
 package com.twu.biblioteca;
 
 
-import com.twu.biblioteca.mocks.BookMock;
+import com.twu.biblioteca.mocks.ItemMocks;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
@@ -41,8 +41,8 @@ public class MenuTest {
 
         String[] bookDetails = outContent.toString().split("\n");
         System.out.println(outContent.toString());
-        System.out.println(BookMock.getBookList().size());
-        assertEquals(bookDetails.length, BookMock.getBookList().size());
+        System.out.println(ItemMocks.getBookList().size());
+        assertEquals(bookDetails.length, ItemMocks.getBookList().size());
     }
 
     @Test

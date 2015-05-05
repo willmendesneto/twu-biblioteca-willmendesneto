@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.mocks.BookMock;
+import com.twu.biblioteca.mocks.ItemMocks;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class BookTest {
         System.setErr(new PrintStream(errContent));
     }
 
-    private ArrayList<Book> _bookList = BookMock.getBookList();
+    private ArrayList<Book> _bookList = ItemMocks.getBookList();
 
     @Test
     public void printBookDetailsShouldPrintNameYearAndAuthorOnColumns() throws Exception {
