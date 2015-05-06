@@ -184,6 +184,9 @@ public class Biblioteca {
         return _userLogged;
     }
 
+    public String getUserLoggedDetails() {
+        return _userLogged.getDetails();
+    }
 
     public boolean logout(String libraryNumber, String password) {
         int position = findUsersByLibraryNumberAndPassword(libraryNumber, password);

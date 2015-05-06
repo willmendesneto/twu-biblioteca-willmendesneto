@@ -16,6 +16,7 @@ public final class MessagesHelper {
                                     "5 - Checkout Movie\n" +
                                     "6 - Return Movie\n" +
                                     "7 - Login\n" +
+                                    "8 - User information\n" +
                                     "0 - Quit\n" +
                                     "";
 

@@ -36,7 +36,7 @@ public class MenuTest {
     }
 
     @Test
-    public void bookListDetailsShouldBePrintedByChoose1OnMenu() throws FileNotFoundException {
+    public void bookListDetailsShouldBePrintedInMenu() throws FileNotFoundException {
         _menu.menuOptions(1);
 
         String[] bookDetails = outContent.toString().split("\n");
@@ -46,7 +46,7 @@ public class MenuTest {
     }
 
     @Test
-    public void anErrorShouldBeDisplayedForInvalidOptionOnMenu(){
+    public void aMessageErrorShouldBeDisplayedForInvalidOptionOnMenu(){
         _menu.menuOptions(10);
         assertEquals(MessagesHelper.OptionIsInvalid + _breakline, outContent.toString());
     }

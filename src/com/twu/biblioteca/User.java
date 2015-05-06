@@ -44,7 +44,8 @@ public class User {
 
     public String getDetails(){
 
-        return  "Name:         " + _name +  "\n" +
+        return  "User Informations:\n\n"+
+                "Name:         " + _name +  "\n" +
                 "Email:        " + _email + "\n" +
                 "Phone number: " + _phone + "\n";
 

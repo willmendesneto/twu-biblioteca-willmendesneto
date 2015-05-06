@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public Biblioteca _biblioteca;
+    private Biblioteca _biblioteca;
 
-    public User currentUser;
+    private User currentUser;
 
     public Menu() {
         _biblioteca = new Biblioteca(new ArrayList<Book>() {{
@@ -19,8 +19,7 @@ public class Menu {
             add(new Movie("Jurassic Park", "Spielberg", 2008, 9));
             add(new Movie("The Butterfly Effect", "Eric Bress", 2004, 7));
             add(new Movie("Saw", "James Wan", 2005, 10));
-        }}
-        );
+        }});
     }
 
     public String readInputInformation(String message){
@@ -86,6 +85,15 @@ public class Menu {
                 break;
             case 7:
                 userLogin(MessagesHelper.LoginIsRequired);
+                break;
+
+            case 8:
+
+                if (!hasUserLogged()) {
+                    userLogin(MessagesHelper.LoginIsRequired);
+                } else {
+                    message += _biblioteca.getUserLoggedDetails();
+                }
                 break;
 
             case 0:
