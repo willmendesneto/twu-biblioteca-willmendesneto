@@ -1,10 +1,9 @@
 package com.twu.biblioteca;
 
-public class Movie {
+public class Movie extends Item{
 
     private String _name;
     private String _director;
-    public boolean isCheckedOut;
     private int _year;
     private int _rate;
 
@@ -13,7 +12,6 @@ public class Movie {
         _director = director;
         _year = year;
         _rate = rate;
-        isCheckedOut = false;
     }
 
     public String getDetails() {

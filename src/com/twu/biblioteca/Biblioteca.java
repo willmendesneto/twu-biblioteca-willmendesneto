@@ -69,11 +69,13 @@ public class Biblioteca {
         return moviesDetails;
     }
 
-    public boolean checkoutBook(String bookTitle) {
+    public boolean checkoutBook(String bookTitle, String libraryNumber) {
         int position = findAvailableBooksByTitle(bookTitle);
         if (position != -1) {
-            _bookList.get(position).isCheckedOut = true;
-            _checkedOutBooks.add(_bookList.get(position));
+            Book book = _bookList.get(position);
+            book.isCheckedOut = true;
+            book.setUserLibraryNumber(libraryNumber);
+            _checkedOutBooks.add(book);
             _bookList.remove(position);
 
             return true;
@@ -82,11 +84,14 @@ public class Biblioteca {
 
     }
 
-    public boolean checkoutMovie(String movieName) {
+    public boolean checkoutMovie(String movieName, String libraryNumber) {
         int position = findAvailableMoviesByName(movieName);
         if (position != -1) {
-            _movieList.get(position).isCheckedOut = true;
-            _checkedOutMovies.add(_movieList.get(position));
+            Movie movie = _movieList.get(position);
+            movie.isCheckedOut = true;
+            movie.setUserLibraryNumber(libraryNumber);
+
+            _checkedOutMovies.add(movie);
             _movieList.remove(position);
 
             return true;

@@ -37,31 +37,52 @@ public class Menu {
                 message += _biblioteca.getBookListDetails();
                 break;
             case 2:
-                boolean checkoutBookWithSuccess = _biblioteca.checkoutBook(readInputInformation(MessagesHelper.SearchBookInLibrary));
-                message += (checkoutBookWithSuccess == true) ?
-                        MessagesHelper.CheckoutBookSuccess :
-                        MessagesHelper.CheckoutBookError;
+
+                if (!hasUserLogged()) {
+                    userLogin(MessagesHelper.LoginIsRequired);
+                } else {
+                    boolean checkoutBookWithSuccess = _biblioteca.checkoutBook(readInputInformation(MessagesHelper.SearchBookInLibrary), currentUser.getLibraryNumber());
+                    message += (checkoutBookWithSuccess == true) ?
+                            MessagesHelper.CheckoutBookSuccess :
+                            MessagesHelper.CheckoutBookError;
+                }
+
                 break;
             case 3:
-                boolean bookWasReturnedWithSuccess = _biblioteca.returnBook(readInputInformation(MessagesHelper.SearchBookInLibrary));
-                message += (bookWasReturnedWithSuccess) ?
-                        MessagesHelper.ReturnBookSuccess :
-                        MessagesHelper.ReturnBookError;
+
+                if (!hasUserLogged()) {
+                    userLogin(MessagesHelper.LoginIsRequired);
+                } else {
+                    boolean bookWasReturnedWithSuccess = _biblioteca.returnBook(readInputInformation(MessagesHelper.SearchBookInLibrary));
+                    message += (bookWasReturnedWithSuccess) ?
+                            MessagesHelper.ReturnBookSuccess :
+                            MessagesHelper.ReturnBookError;
+                }
                 break;
             case 4:
                 message += _biblioteca.getMovieListDetails();
                 break;
             case 5:
-                boolean checkoutMovieWithSuccess = _biblioteca.checkoutMovie(readInputInformation(MessagesHelper.SearchMovieInLibrary));
-                message += (checkoutMovieWithSuccess == true) ?
-                        MessagesHelper.CheckoutMovieSuccess :
-                        MessagesHelper.CheckoutMovieError;
+
+                if (!hasUserLogged()) {
+                    userLogin(MessagesHelper.LoginIsRequired);
+                } else {
+                    boolean checkoutMovieWithSuccess = _biblioteca.checkoutMovie(readInputInformation(MessagesHelper.SearchMovieInLibrary), currentUser.getLibraryNumber());
+                    message += (checkoutMovieWithSuccess == true) ?
+                            MessagesHelper.CheckoutMovieSuccess :
+                            MessagesHelper.CheckoutMovieError;
+                }
                 break;
             case 6:
-                boolean movieWasReturnedWithSuccess = _biblioteca.returnMovie(readInputInformation(MessagesHelper.SearchMovieInLibrary));
-                message += (movieWasReturnedWithSuccess) ?
-                        MessagesHelper.ReturnMovieSuccess :
-                        MessagesHelper.ReturnMovieError;
+
+                if (!hasUserLogged()) {
+                    userLogin(MessagesHelper.LoginIsRequired);
+                } else {
+                    boolean movieWasReturnedWithSuccess = _biblioteca.returnMovie(readInputInformation(MessagesHelper.SearchMovieInLibrary));
+                    message += (movieWasReturnedWithSuccess) ?
+                            MessagesHelper.ReturnMovieSuccess :
+                            MessagesHelper.ReturnMovieError;
+                }
                 break;
             case 7:
                 userLogin(MessagesHelper.LoginIsRequired);

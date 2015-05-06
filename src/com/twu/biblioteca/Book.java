@@ -1,10 +1,9 @@
 package com.twu.biblioteca;
 
-public class Book {
+public class Book extends Item {
 
     private String _title;
     private String _author;
-    public boolean isCheckedOut;
     private int _year;
 
     public String getTitle() {
@@ -23,7 +22,6 @@ public class Book {
         _title = title;
         _author = author;
         _year = year;
-        isCheckedOut = false;
     }
 
     public String getDetails() {

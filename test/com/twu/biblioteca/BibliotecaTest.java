@@ -17,6 +17,8 @@ public class BibliotecaTest {
 
     private Biblioteca _biblioteca = new Biblioteca(ItemMocks.getBookList(), ItemMocks.getMovieList());
 
+    private User _user = ItemMocks.getUser();
+
     private String _breakline = "\n";
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -32,6 +34,8 @@ public class BibliotecaTest {
 
     @Before
     public void setUp() throws Exception {
+        _biblioteca.login(_user.getLibraryNumber(), _user.getPassword());
+
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
     }
@@ -56,28 +60,28 @@ public class BibliotecaTest {
 
     @Test
     public  void bookShouldBeRemovedFromBookListAfterCheckout() {
-        assertEquals(true, _biblioteca.checkoutBook("Another awesome book"));
+        assertEquals(true, _biblioteca.checkoutBook("Another awesome book", _user.getLibraryNumber()));
     }
 
     @Test
     public void successAfterSuccessfulCheckout(){
 
-        assertEquals(true, _biblioteca.checkoutBook("Another awesome book"));
-        assertEquals(false, _biblioteca.checkoutBook("Another awesome book"));
+        assertEquals(true, _biblioteca.checkoutBook("Another awesome book", _user.getLibraryNumber()));
+        assertEquals(false, _biblioteca.checkoutBook("Another awesome book", _user.getLibraryNumber()));
     }
 
     @Test
     public void unccessfulAfterAnsuccessfulCheckout(){
-        _biblioteca.checkoutBook(ItemMocks.WrongBookTitle);
+        _biblioteca.checkoutBook(ItemMocks.WrongBookTitle, _user.getLibraryNumber());
 
-        assertEquals(false, _biblioteca.checkoutBook(ItemMocks.WrongBookTitle));
+        assertEquals(false, _biblioteca.checkoutBook(ItemMocks.WrongBookTitle, _user.getLibraryNumber()));
     }
 
     @Test
     public void bookShouldBeAddedToBookListAfterReturnBook(){
         Book book = ItemMocks.getBook();
 
-        _biblioteca.checkoutBook(book.getTitle());
+        _biblioteca.checkoutBook(book.getTitle(), _user.getLibraryNumber());
         assertEquals(true, _biblioteca.returnBook(book.getTitle()));
     }
 
@@ -85,7 +89,7 @@ public class BibliotecaTest {
     public void shouldBeReturnTrueAfterSuccessfulReturnBook(){
         Book book = ItemMocks.getBook();
 
-        assertEquals(true, _biblioteca.checkoutBook(book.getTitle()));
+        assertEquals(true, _biblioteca.checkoutBook(book.getTitle(), _user.getLibraryNumber()));
         assertEquals(true, _biblioteca.returnBook(book.getTitle()));
     }
 
@@ -121,28 +125,28 @@ public class BibliotecaTest {
 
     @Test
     public  void movieShouldBeRemovedFromBookListAfterCheckout() {
-        assertEquals(true, _biblioteca.checkoutMovie("The Butterfly Effect"));
+        assertEquals(true, _biblioteca.checkoutMovie("The Butterfly Effect", _user.getLibraryNumber()));
     }
 
     @Test
     public void successAfterSuccessfulMovieCheckout(){
 
-        assertEquals(true, _biblioteca.checkoutMovie("The Butterfly Effect"));
-        assertEquals(false, _biblioteca.checkoutMovie("The Butterfly Effect"));
+        assertEquals(true, _biblioteca.checkoutMovie("The Butterfly Effect", _user.getLibraryNumber()));
+        assertEquals(false, _biblioteca.checkoutMovie("The Butterfly Effect", _user.getLibraryNumber()));
     }
 
     @Test
     public void unccessfulAfterAnsuccessfulMovieCheckout(){
-        _biblioteca.checkoutMovie(ItemMocks.WrongMovieName);
+        _biblioteca.checkoutMovie(ItemMocks.WrongMovieName, _user.getLibraryNumber());
 
-        assertEquals(false, _biblioteca.checkoutBook(ItemMocks.WrongMovieName));
+        assertEquals(false, _biblioteca.checkoutBook(ItemMocks.WrongMovieName, _user.getLibraryNumber()));
     }
 
     @Test
     public void movieShouldBeAddedToMovieListAfterReturnMovie(){
         Movie movie = ItemMocks.getMovie();
 
-        _biblioteca.checkoutMovie(movie.getName());
+        _biblioteca.checkoutMovie(movie.getName(), _user.getLibraryNumber());
         assertEquals(true, _biblioteca.returnMovie(movie.getName()));
     }
 
@@ -150,7 +154,7 @@ public class BibliotecaTest {
     public void shouldBeReturnTrueAfterSuccessfulReturnMovie(){
         Movie movie = ItemMocks.getMovie();
 
-        assertEquals(true, _biblioteca.checkoutMovie(movie.getName()));
+        assertEquals(true, _biblioteca.checkoutMovie(movie.getName(), _user.getLibraryNumber()));
         assertEquals(true, _biblioteca.returnMovie(movie.getName()));
     }
 
