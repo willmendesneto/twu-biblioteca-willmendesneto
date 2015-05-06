@@ -7,6 +7,8 @@ public class Menu {
 
     public Biblioteca _biblioteca;
 
+    public User currentUser;
+
     public Menu() {
         _biblioteca = new Biblioteca(new ArrayList<Book>() {{
             add(new Book("Learning TDD", "Cool Girl", 2015));
@@ -21,7 +23,7 @@ public class Menu {
         );
     }
 
-    public String readItemInformation(String message){
+    public String readInputInformation(String message){
         Scanner text = new Scanner(System.in);
         System.out.println(message);
         String itemInformation = text.nextLine();
@@ -35,13 +37,13 @@ public class Menu {
                 message += _biblioteca.getBookListDetails();
                 break;
             case 2:
-                boolean checkoutBookWithSuccess = _biblioteca.checkoutBook(readItemInformation(MessagesHelper.SearchBookInLibrary));
+                boolean checkoutBookWithSuccess = _biblioteca.checkoutBook(readInputInformation(MessagesHelper.SearchBookInLibrary));
                 message += (checkoutBookWithSuccess == true) ?
                         MessagesHelper.CheckoutBookSuccess :
                         MessagesHelper.CheckoutBookError;
                 break;
             case 3:
-                boolean bookWasReturnedWithSuccess = _biblioteca.returnBook(readItemInformation(MessagesHelper.SearchBookInLibrary));
+                boolean bookWasReturnedWithSuccess = _biblioteca.returnBook(readInputInformation(MessagesHelper.SearchBookInLibrary));
                 message += (bookWasReturnedWithSuccess) ?
                         MessagesHelper.ReturnBookSuccess :
                         MessagesHelper.ReturnBookError;
@@ -50,17 +52,21 @@ public class Menu {
                 message += _biblioteca.getMovieListDetails();
                 break;
             case 5:
-                boolean checkoutMovieWithSuccess = _biblioteca.checkoutMovie(readItemInformation(MessagesHelper.SearchMovieInLibrary));
+                boolean checkoutMovieWithSuccess = _biblioteca.checkoutMovie(readInputInformation(MessagesHelper.SearchMovieInLibrary));
                 message += (checkoutMovieWithSuccess == true) ?
                         MessagesHelper.CheckoutMovieSuccess :
                         MessagesHelper.CheckoutMovieError;
                 break;
             case 6:
-                boolean movieWasReturnedWithSuccess = _biblioteca.returnMovie(readItemInformation(MessagesHelper.SearchMovieInLibrary));
+                boolean movieWasReturnedWithSuccess = _biblioteca.returnMovie(readInputInformation(MessagesHelper.SearchMovieInLibrary));
                 message += (movieWasReturnedWithSuccess) ?
                         MessagesHelper.ReturnMovieSuccess :
                         MessagesHelper.ReturnMovieError;
                 break;
+            case 7:
+                userLogin(MessagesHelper.LoginIsRequired);
+                break;
+
             case 0:
                 message += MessagesHelper.Quit;
                 break;
@@ -94,5 +100,25 @@ public class Menu {
             }
 
         }
+    }
+
+    public boolean hasUserLogged () {
+        return currentUser != null && currentUser.isLogged == true;
+    }
+
+    public void userLogin(String message) {
+        System.out.println(message);
+        String libraryNumber = readInputInformation(MessagesHelper.LibraryNumber);
+        String password = readInputInformation(MessagesHelper.Password);
+        boolean userIsLogged = _biblioteca.login(libraryNumber, password);
+
+        if (userIsLogged){
+            currentUser = _biblioteca.getUserLogged();
+            message = String.format(MessagesHelper.LoginUserSuccess, currentUser.getName());
+        }else{
+            message = MessagesHelper.LoginUserError;
+        }
+
+        System.out.println(message);
     }
 }

@@ -24,8 +24,8 @@ public class Movie {
         return String.format("%s | %s | %s | %s\n",
                 whitespaceName,
                 whitespaceDirector,
-                _rate,
-                _year);
+                _year,
+                _rate);
     }
 
     public String getName() {

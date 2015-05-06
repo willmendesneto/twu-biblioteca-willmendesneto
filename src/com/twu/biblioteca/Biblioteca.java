@@ -8,6 +8,10 @@ public class Biblioteca {
 
     public ArrayList<Movie> _movieList = new ArrayList<Movie>();
 
+    public User _userLogged;
+
+    public ArrayList<User> _userList;
+
     public ArrayList<Book> _checkedOutBooks = new ArrayList<Book>();
 
     public ArrayList<Movie> _checkedOutMovies = new ArrayList<Movie>();
@@ -15,12 +19,13 @@ public class Biblioteca {
     public Biblioteca(ArrayList<Book> books, ArrayList<Movie> movies) {
         _bookList = new ArrayList<Book>();
 
-        AddBookItems(books);
-        AddMovieItems(movies);
+        addBookItems(books);
+        addMovieItems(movies);
+        addUsers();
 
     }
 
-    public void AddBookItems(ArrayList<Book> books) {
+    public void addBookItems(ArrayList<Book> books) {
 
         for (Book book : books){
             _bookList.add(new Book(book.getTitle(), book.getAuthor(), book.getYear()));
@@ -28,7 +33,15 @@ public class Biblioteca {
 
     }
 
-    public void AddMovieItems(ArrayList<Movie> movies) {
+    public void addUsers () {
+        _userList = new ArrayList<User>() {{
+            add(new User("Adrian", "adrian@adrian.com", "+55 71 9999 8888", "111-1111", "1111"));
+            add(new User("Bia", "bia@abia.com", "+55 71 2233 8888", "222-2222", "2222"));
+            add(new User("Carl", "carl@carl.com", "+55 71 3333 8888", "333-3333", "3333"));
+        }};
+    }
+
+    public void addMovieItems(ArrayList<Movie> movies) {
 
         for (Movie movie : movies){
             _movieList.add(new Movie(movie.getName(), movie.getDirector(), movie.getRate(), movie.getYear()));
@@ -55,21 +68,6 @@ public class Biblioteca {
         }
         return moviesDetails;
     }
-
-    public int bookListMaxLengthString(){
-        int max = 0;
-        for(Book book : _bookList){
-            if (book.getTitle().length() > max ){
-                max = book.getTitle().length();
-            }
-
-            if (book.getAuthor().length() > max){
-                max = book.getAuthor().length();
-            }
-        }
-        return max;
-    }
-
 
     public boolean checkoutBook(String bookTitle) {
         int position = findAvailableBooksByTitle(bookTitle);
@@ -157,15 +155,53 @@ public class Biblioteca {
     public boolean returnBook(String bookTitle) {
         int position = findCheckedOutBooksByTitle(bookTitle);
         if (position != - 1) {
-            _checkedOutMovies.get(position).isCheckedOut = false;
-            _movieList.add(_checkedOutMovies.get(position));
+            _checkedOutBooks.get(position).isCheckedOut = false;
+            _bookList.add(_checkedOutBooks.get(position));
 
-            _checkedOutMovies.remove(position);
+            _checkedOutBooks.remove(position);
 
             return true;
         }
         return false;
     }
 
+    public boolean login(String libraryNumber, String password) {
+        int position = findUsersByLibraryNumberAndPassword(libraryNumber, password);
+        if (position != - 1) {
+            _userList.get(position).isLogged = true;
+            _userLogged = _userList.get(position);
+            return true;
+        }
+        return false;
+    }
+
+    public User getUserLogged() {
+        return _userLogged;
+    }
+
+
+    public boolean logout(String libraryNumber, String password) {
+        int position = findUsersByLibraryNumberAndPassword(libraryNumber, password);
+        if (position != - 1) {
+            _userList.get(position).isLogged = false;
+            _userLogged = null;
+            return true;
+        }
+        return false;
+    }
+
+    public int findUsersByLibraryNumberAndPassword(String libraryNumber, String password){
+        int i = 0;
+        int position = -1;
+
+        for (User user : _userList){
+            if(user.checkCredentials(libraryNumber, password)){
+                position = i;
+                break;
+            }
+            i++;
+        }
+        return position;
+    }
 
 }

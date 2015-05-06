@@ -37,7 +37,7 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void bookListDetailsShouldPrintedAsColumns() throws FileNotFoundException {
+    public void bookListDetailsShouldPrintedAsColumns() {
         System.setOut(null);
         String bookDetailsMock = "";
         ArrayList<Book> bookList = ItemMocks.getBookList();
@@ -101,18 +101,18 @@ public class BibliotecaTest {
     //
 
     @Test
-    public void movieListDetailsShouldPrintedAsColumns() throws FileNotFoundException {
+    public void movieListDetailsShouldPrintedAsColumns() {
         System.setOut(null);
-        String movieDetailsMock = "";
+        String movieDetailsMock = _biblioteca.getMovieListDetails();
         ArrayList<Movie> movieList = ItemMocks.getMovieList();
 
-        for (Movie movie : movieList){
-            movieDetailsMock += movie.getDetails();
+        for(int i = 0; movieList.size() > i; ++i ) {
+            assertEquals(true, movieDetailsMock.contains(movieList.get(i).getName()));
+            assertEquals(true, movieDetailsMock.contains(movieList.get(i).getDirector()));
+            assertEquals(true, movieDetailsMock.contains(Integer.toString(movieList.get(i).getRate()) ));
+            assertEquals(true, movieDetailsMock.contains(Integer.toString(movieList.get(i).getYear()) ));
         }
-
-        assertEquals(movieDetailsMock, _biblioteca.getMovieListDetails());
     }
-
 
     @Test
     public void bibliotecaShouldFindThePositionForAVailableMovieName(){
@@ -139,11 +139,11 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void bookShouldBeAddedToMovieListAfterReturnMovie(){
+    public void movieShouldBeAddedToMovieListAfterReturnMovie(){
         Movie movie = ItemMocks.getMovie();
 
-        _biblioteca.checkoutBook(movie.getName());
-        assertEquals(true, _biblioteca.returnBook(movie.getName()));
+        _biblioteca.checkoutMovie(movie.getName());
+        assertEquals(true, _biblioteca.returnMovie(movie.getName()));
     }
 
     @Test
@@ -159,4 +159,9 @@ public class BibliotecaTest {
         assertEquals(false,  _biblioteca.returnMovie(ItemMocks.WrongBookTitle));
     }
 
+    @Test
+    public void userLoggedWithLbraryNumberAndPasswordWithSucess() {
+        User user = ItemMocks.getUser();
+        assertEquals(true, _biblioteca.login(user.getLibraryNumber(), user.getPassword()));
+    }
 }
